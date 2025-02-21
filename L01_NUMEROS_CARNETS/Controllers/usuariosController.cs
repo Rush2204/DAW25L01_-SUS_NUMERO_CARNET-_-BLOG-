@@ -57,7 +57,7 @@ namespace L01_NUMEROS_CARNETS.Controllers
 
         public IActionResult ActualizarUsuario(int id, [FromBody] usuarios usuarioModificar)
         {
-            usuarios? usuarioActual = (from e in _BlogDBContext.usuarios where e.UsuarioId == id select e).FirstOrDefault();
+            usuarios? usuarioActual = (from e in _BlogDBContext.usuarios where e.usuarioId == id select e).FirstOrDefault();
 
             if (usuarioActual == null)
             { return NotFound(); }
@@ -80,7 +80,7 @@ namespace L01_NUMEROS_CARNETS.Controllers
 
         public IActionResult EliminarUsuario(int id)
         {
-            usuarios? usuario = (from e in _BlogDBContext.usuarios where e.UsuarioId == id select e).FirstOrDefault();
+            usuarios? usuario = (from e in _BlogDBContext.usuarios where e.usuarioId == id select e).FirstOrDefault();
 
             if (usuario == null)
             { return NotFound(); }
