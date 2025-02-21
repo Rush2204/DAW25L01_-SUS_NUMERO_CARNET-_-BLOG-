@@ -88,5 +88,40 @@ namespace L01_NUMEROS_CARNETS.Controllers
 
             return Ok(comentario);
         }
+
+        //Retornar el listado por una Id de usuario en especifico
+
+        [HttpGet]
+        [Route("GetByIdUsuario/{id}")]
+
+        public IActionResult Get(int id)
+        {
+            var usuario = (from e in _BlogDBContext.comentarios
+                                  join t in _BlogDBContext.usuarios
+                                  on e.usuarioId equals t.usuarioId
+                                  where e.usuarioId == id
+                                  select new
+                                  {
+                                      t.usuarioId,
+                                      t.nombreUsuario,
+                                      t.nombre,
+                                      t.apellido,
+                                      comentarios = (from e in _BlogDBContext.comentarios
+                                                     join t in _BlogDBContext.usuarios
+                                                     on e.usuarioId equals t.usuarioId
+                                                     where e.usuarioId == id
+                                                     select new
+                                                     {
+                                                        e.cometarioId,
+                                                        e.comentario
+                                                     }).ToList()
+                                  }).FirstOrDefault();
+
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+            return Ok(usuario);
+        }
     }
 }

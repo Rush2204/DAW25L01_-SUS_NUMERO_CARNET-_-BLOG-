@@ -92,10 +92,10 @@ namespace L01_NUMEROS_CARNETS.Controllers
             return Ok(calificaciones);
         }
 
-        //Retornar el listado por una publicación en especifico
+        //Retornar el listado por una Id de publicación en especifico
 
         [HttpGet]
-        [Route("GetById/{id}")]
+        [Route("GetByIdPublicacion/{id}")]
 
         public IActionResult Get(int id)
         {
