@@ -105,12 +105,19 @@ namespace L01_NUMEROS_CARNETS.Controllers
                                  where e.publicacionId == id
                                  select new
                                  {
+                                     e.publicacionId,
                                      e.titulo,
-                                     t.calificacionId,
-                                     t.publicacionId,
-                                     t.usuarioId,
-                                     t.calificacion
-                                 }).ToList();
+                                     e.descripcion,
+                                     calificaciones = (from e in _BlogDBContext.publicaciones
+                                                       join t in _BlogDBContext.calificaciones
+                                                       on e.publicacionId equals t.publicacionId
+                                                       where e.publicacionId == id
+                                                       select new
+                                                       {
+                                                           t.calificacionId,
+                                                           t.calificacion
+                                                       }).ToList()
+                                 }).FirstOrDefault();
 
             if (calificaciones == null)
             {
