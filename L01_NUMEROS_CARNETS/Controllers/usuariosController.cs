@@ -141,5 +141,33 @@ namespace L01_NUMEROS_CARNETS.Controllers
             }
             return Ok(usuarios);
         }
+
+        //Retornar el listado de top N 
+
+        [HttpGet]
+        [Route("GetTopNUsuario")]
+
+        public IActionResult Get2()
+        {
+            var usuario = (from c in _BlogDBContext.comentarios
+                           join u in _BlogDBContext.usuarios
+                           on c.usuarioId equals u.usuarioId
+                           group c by new { u.usuarioId, u.nombreUsuario, u.nombre, u.apellido } into g
+                           orderby g.Count() descending
+                           select new
+                           {
+                               g.Key.usuarioId,
+                               g.Key.nombreUsuario,
+                               g.Key.nombre,
+                               g.Key.apellido,
+                               cantidadComentarios = g.Count()
+                           }).Take(3).ToList();
+
+            if (usuario == null || !usuario.Any())
+            {
+                return NotFound();
+            }
+            return Ok(usuario);
+        }
     }
 }
