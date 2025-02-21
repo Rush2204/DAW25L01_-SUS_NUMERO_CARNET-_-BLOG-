@@ -4,7 +4,7 @@ namespace L01_NUMEROS_CARNETS.Models
     public class usuarios
     {
         [Key]
-        public int UsuarioId { get; set; }
+        public int usuarioId { get; set; }
         public int rolId { get; set; }
         public string nombreUsuario { get; set; }
         public string clave { get; set; }
