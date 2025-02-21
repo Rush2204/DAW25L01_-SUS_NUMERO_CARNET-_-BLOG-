@@ -117,6 +117,29 @@ namespace L01_NUMEROS_CARNETS.Controllers
             return Ok(usuarios);
         }
 
-        
+        //Retornar el listado por nombre y apellido
+
+        [HttpGet]
+        [Route("GetByNyA/{nombre}/{apellido}")]
+
+        public IActionResult GetNyA(string nombre, string apellido)
+        {
+            var usuarios = (from e in _BlogDBContext.usuarios
+                            where e.nombre == nombre && e.apellido == apellido
+                            select new
+                            {
+                                e.usuarioId,
+                                e.rolId,
+                                e.nombreUsuario,
+                                e.nombre,
+                                e.apellido,
+                            }).ToList();
+
+            if (usuarios == null || usuarios.Count == 0)
+            {
+                return NotFound();
+            }
+            return Ok(usuarios);
+        }
     }
 }
