@@ -91,5 +91,32 @@ namespace L01_NUMEROS_CARNETS.Controllers
 
             return Ok(usuario);
         }
+
+        //Retornar el listado por rol
+
+        [HttpGet]
+        [Route("GetByRol/{rolId}")]
+
+        public IActionResult GetRol(int rolId)
+        {
+            var usuarios = (from e in _BlogDBContext.usuarios
+                            where e.rolId == rolId
+                                  select new
+                                  {
+                                      e.usuarioId,
+                                      e.rolId,
+                                      e.nombreUsuario,
+                                      e.nombre,
+                                      e.apellido,
+                                  }).ToList();
+
+            if (usuarios == null || usuarios.Count ==0)
+            {
+                return NotFound();
+            }
+            return Ok(usuarios);
+        }
+
+        
     }
 }
